@@ -106,6 +106,53 @@ returns empty JD content after throttling. Inlining cookies in curl
 `-H "Cookie: ..."` breaks on special characters — always use
 `-b /tmp/cookies.txt`. The Voyager API returns 0 results.
 
+### JD Source: Email Job Alerts (NEW — 2026-08-02)
+
+When the user asks to retrieve jobs from email alerts (LinkedIn Job
+Alerts, EY/SuccessFactors job alerts, or any `*@noreply*.jobs2web.com`
+sender), use himalaya to search, read, and parse job URLs from email
+bodies, then fetch full JDs and score them.
+
+**Workflow:**
+
+1. **Search by sender** — use `himalaya --output json envelope list --page 1
+   --page-size 50 from "sender@domain"` to find alert emails. Parse JSON
+   with Python for structured output (ID, subject, date).
+
+2. **Read email body** — `himalaya message read <ID>` returns plain text
+   including HTML part content. Job alerts contain job titles + URLs
+   separated by `\r\n` and dashes.
+
+3. **Parse job URLs** — extract job IDs from URLs in the email body.
+   LinkedIn URLs contain `/jobs/view/<JOB_ID>/`. EY/SuccessFactors URLs
+   contain `/job/<Location>-<Title>/<JOB_ID>/`.
+
+4. **Fetch full JDs** — use the right tool per portal:
+   - **LinkedIn guest API** — `curl -sL -o /tmp/job.html "https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/<JOB_ID>"` then strip HTML with Python regex. No cookies needed. Returns ~66KB HTML per job. Works for active postings; returns empty for expired ones.
+   - **EY / SuccessFactors** — `curl` returns only JS boilerplate (GTM scripts, cookie consent). MUST use `browser_navigate` to load the page — the browser renders the JS and the accessibility snapshot contains the full JD text.
+   - **Other jobs2web.com portals** (ILO, UNIDO, ICRC, ITU, etc.) — try curl first; if the response is JS boilerplate, fall back to `browser_navigate`.
+
+5. **Filter for relevance** — before fetching JDs, scan job titles in the
+   email and skip obvious mismatches (actuarial, insurance, mechanical
+   engineering with no ICT content, etc.). Fetch only relevant JDs.
+
+6. **Score with V5.0.0** — load `vacancy-compatibility-scoring-engine`
+   and `cv-repository` skills, read the CV database, then score each JD
+   with full 7-parameter framework.
+
+**LinkedIn sender address distinction (important):**
+- `jobalerts-noreply@linkedin.com` — sends **job alert digests** (multiple jobs per email, subject = top job title). This is the one to search for.
+- `jobs-noreply@linkedin.com` — sends **application confirmations** and single-job recommendations. Not a job alert source.
+
+**Himalaya filter limitation:** Cannot combine `subject "X" from "Y"` in
+one query — the parser rejects it with "found 'f' expected space between
+filters". Use `from "sender"` alone, or `subject "keyword"` alone. Never
+combine filters.
+
+See `references/email-job-alert-extraction-2026-08-02.md` for the full
+worked example with code samples, sender addresses, and portal-specific
+fetch techniques.
+
 ## Phase 2a: DOCX CV Generation Pipeline (JSON → Generator → .docx)
 
 When producing machine-readable .docx CVs via the generator script at `~/Desktop/LND/CVS/cv_generator.py`:
@@ -129,7 +176,7 @@ When producing machine-readable .docx CVs via the generator script at `~/Desktop
 3. **Determine positioning lane** from table above
 4. **Write JSON content file** to `~/Desktop/LND/CVS/cv_content_<Company>_<Role>.json`
 5. **Run generator**: `python3 ~/Desktop/LND/CVS/cv_generator.py ~/Desktop/LND/CVS/cv_content_<Company>_<Role>.json`
-6. **Verify**: `ls -la ~/Desktop/LND/CVS/User_Markovic_CV_<Company>_<Role>.docx`
+6. **Verify**: `ls -la ~/Desktop/LND/CVS/User_CV_<Company>_<Role>.docx`
 
 ### JSON Content Structure
 
@@ -175,7 +222,7 @@ cmux send-key --workspace <UUID> Enter
 ```
 
 ### Pitfalls
-- **Name must be User MARKOVIĆ** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106`
+- **Name must be GORAN MARKOVIĆ** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106`
 - **No first-person pronouns** in CV body — use action-led phrasing
 - **No tables** for competencies — ATS parsers break on table cells
 - **Compound bullets only** — pack 2-3 facts per bullet, never single-fact bullets
@@ -191,7 +238,7 @@ cmux send-key --workspace <UUID> Enter
 >
 > **FOUNDATIONAL STEP BEFORE WRITING:** Update the CV database with User's current Present-role work before generating the CV. In the WTO session (Jun 2026, ref: current-work-overrides-database-2026-06), User's active Moodle/Canvas LMS integration at Olivia Education was NOT in the database — it had to be added mid-session via patch on section 3.1. Check and update section 3.1 first: if User's current work overlaps the target role's core function, patch the database BEFORE generating materials. This prevents stale-sourced CVs that miss the candidate's strongest current proof points.
 >
-> **MASTER REPOSITORY:** `~/Desktop/CV/User_Markovic_CV_Repository.docx` — modular system: 4 summary options, 4 competency clusters, 12 experience entries with full bullet text, 3 distinctive projects, 3 ATS keyword banks. Build CVs by selecting components from the repository, then apply canonical formatting. See `cv-writing` skill references for inventory guide.
+> **MASTER REPOSITORY:** `~/Desktop/CV/User_CV_Repository.docx` — modular system: 4 summary options, 4 competency clusters, 12 experience entries with full bullet text, 3 distinctive projects, 3 ATS keyword banks. Build CVs by selecting components from the repository, then apply canonical formatting. See `cv-writing` skill references for inventory guide.
 >
 > **HUMANIZER:** ALL user-facing output (CVs, cover letters, form answers, evaluations) must be humanized. Load the `humanizer` skill and apply it to every piece of prose. No AI-slop vocabulary, no formal discourse markers, no perfectly symmetrical paragraphs, no generic conclusions. Write like a person who did the work.
 
@@ -212,9 +259,9 @@ cmux send-key --workspace <UUID> Enter
 
 ```
 1. HEADER
-   User MARKOVIĆ (with ć, not c)
-   Belgrade, Serbia | +381 64 110 8335 | your-handle@gmail.com
-   LinkedIn: linkedin.com/in/User-markovic3229
+   GORAN MARKOVIĆ (with ć, not c)
+   Belgrade, Serbia | +381 64 110 8335 | admiralGM@gmail.com
+   LinkedIn: linkedin.com/in/goran-markovic3229
    Citizenship: Dual National – Czech Republic (EU) & Serbia
 
 2. PROFESSIONAL SUMMARY
@@ -287,7 +334,7 @@ Same content density, zero fluff. If a bullet could appear on anyone's CV, delet
 
 **Structure:**
 ```
-Subject: [Role Title] — User
+Subject: [Role Title] — Goran Marković
 
 Dear [company] team,
 
@@ -304,7 +351,7 @@ Dear [company] team,
 [Confident sign-off — 1 sentence.]
 
 Best regards,
-User
+Goran Marković
 phone
 email
 ```
@@ -349,7 +396,7 @@ When the user pastes a form question (e.g., "Please describe your experience in 
 
 9. **Form answers need honesty about gaps (NEW — 2026-05-24).** When asked "Have you led X?" and the answer is "not quite," the winning pattern is: "My answer is honest: I have done Y but not X — and that is precisely the step I am ready to take here." This builds trust. For the Reluna "led internal AI/engineering teams" question, the honest frame was: led classical IT at scale, AI leadership has been hands-on/advisory, and that's exactly the step I'm ready to take. This pattern generalizes to all edge-case form questions.
 
-10. **Missing diacritic in name (NEW — 2026-05-24).** The header must always be "User" with ć, not "User" with c. Using the Latin 'c' instead of the correct Serbian 'ć' is the kind of detail that signals carelessness on a document that supposedly represents you. This was caught by Claude Opus 4.5 review.
+10. **Missing diacritic in name (NEW — 2026-05-24).** The header must always be "Goran Marković" with ć, not "Goran Markovic" with c. Using the Latin 'c' instead of the correct Serbian 'ć' is the kind of detail that signals carelessness on a document that supposedly represents you. This was caught by Claude Opus 4.5 review.
 
 11. **Over-separating sections (NEW — 2026-05-24).** Resist the urge to add visual separators, horizontal rules, or extra whitespace between sections. All-caps section titles are sufficient. Visual clutter reduces content density and signals amateur formatting.
 
@@ -376,7 +423,7 @@ Load these from `config/wiki/` when preparing applications:
 | `concepts/cv-role-type-templates.md` | Legacy CV templates per role type |
 | `concepts/cover-letter-pattern-library.md` | Cover letter patterns, pricing, and org-specific frames |
 | `concepts/key-achievements-summary.md` | All quantifiable metrics |
-| `raw/articles/User-markovic-full-cv-2026-05-23.md` | Full CV source text |
+| `raw/articles/User-full-cv-2026-05-23.md` | Full CV source text |
 
 ## Multi-Model CV Synthesis
 
@@ -405,6 +452,7 @@ All reference files are in `references/`:
 | `linkedin-jobs-tracker-extraction-2026-07-24.md` | LinkedIn Jobs Tracker extraction via AppleScript+Chrome — scan saved jobs, navigate to each posting, extract full JD for scoring |
 | `linkedin-search-extraction-curl-cookie-2026-07-24.md` | LinkedIn search results JD extraction — curl + Chrome cookies fallback chain. AppleScript throttles after ~3 jobs; curl with Netscape-format cookies reliably fetches all JDs via the guest API endpoint |
 | `private-sector-scoring-calibration-2026-07.md` | Private-sector P3 scoring calibration — corrected P3 table for non-development roles (ARRISE, Luxoft, PMI pattern). Scoring engine SKILL.md is pinned; this reference holds the fix until unpinned |
+| `email-job-alert-extraction-2026-08-02.md` | Email job alert extraction workflow — LinkedIn sender distinction, EY/SuccessFactors browser requirement, himalaya filter limitation, curl vs browser per portal |
 
 ## Phase 5: Automated Form Filling (NEW — 2026-07-18)
 
@@ -416,7 +464,7 @@ education, skills) in their **actual browser** — not a separate Hermes browser
    reference: `references/applescript-chrome-form-fill.md` for the full technique.
 
 2. **Source data from the CV Repository Database**
-   (`~/CV_REPOSITORY_DATABASE.md`) — Section 3 has all 12 positions
+   (`~/Desktop/CV/CV_REPOSITORY_DATABASE.md`) — Section 3 has all 12 positions
    with periods, companies, and roles. Enter reverse-chronological.
 
 3. **Fill visibly — do NOT submit.** The user monitors the process in their own
@@ -454,5 +502,3 @@ Tracker files:
 - `UN_SECTOR_VACCANCIES_ARCHIVE.txt` — Applied/expired
 - `FREELANCE_CONSULTING_OPPORTUNITIES.TXT` — Freelance/consulting
 - `UN_SECTOR_VACCANCIES_TEMPLATE.txt` — Format reference
-
-Master CV repository: `~/CV_REPOSITORY_DATABASE.md`

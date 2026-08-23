@@ -20,7 +20,7 @@ description: "Evaluate job vacancies against User's profile, produce tailored CV
 Use the scoring framework from the wiki. Load these pages for reference:
 - `config/wiki/concepts/profile-master-summary.md` — complete skills inventory
 - `config/wiki/concepts/vacancy-compatibility-evaluation-system.md` — scoring methodology
-- `config/wiki/entities/User-markovic.md` — master profile
+- `config/wiki/entities/XXXXXX.md` — master profile
 
 **Output:** A compatibility report with score (0-100), domain/geographic/role/seniority/keyword breakdowns, red flags, enablers, and a clear APPLY or DO NOT APPLY verdict.
 
@@ -260,8 +260,8 @@ cmux send-key --workspace <UUID> Enter
 ```
 1. HEADER
    User MARKOVIĆ (with ć, not c)
-   Belgrade, Serbia | +381 64 110 8335 | your-handle@gmail.com
-   LinkedIn: linkedin.com/in/User-markovic3229
+   Belgrade, Serbia | +381 64 110 8335 | XXXXXX
+   LinkedIn: linkedin.com/in/XXXXXX
    Citizenship: Dual National – Czech Republic (EU) & Serbia
 
 2. PROFESSIONAL SUMMARY
@@ -418,12 +418,12 @@ Load these from `config/wiki/` when preparing applications:
 |------|-----|
 | `concepts/profile-master-summary.md` | Complete skills inventory — the lossless reference |
 | `concepts/vacancy-compatibility-evaluation-system.md` | Scoring methodology and decision thresholds |
-| `entities/User-markovic.md` | Master profile with full career data |
+| `entities/XXXXXX.md` | Master profile with full career data |
 | `concepts/cv-style-guide-canonical.md` | The canonical CV format rules |
 | `concepts/cv-role-type-templates.md` | Legacy CV templates per role type |
 | `concepts/cover-letter-pattern-library.md` | Cover letter patterns, pricing, and org-specific frames |
 | `concepts/key-achievements-summary.md` | All quantifiable metrics |
-| `raw/articles/User-markovic-full-cv-2026-05-23.md` | Full CV source text |
+| `raw/articles/XXXXXX-full-cv-2026-05-23.md` | Full CV source text |
 
 ## Multi-Model CV Synthesis
 

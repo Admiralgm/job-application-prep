@@ -3,7 +3,7 @@
 ## Discovery
 
 Two pure private-sector roles scored on 2026-07-24 exposed a P3 systematic
-error in the V5.0.0 scoring engine SKILL.md (`vacancy-compatibility-scoring-engine`).
+error in the V5.0.0 scoring engine SKILL.md (`vaccancy-compatibility-scoring-engine`).
 
 ## The Problem
 
@@ -68,7 +68,7 @@ scoring 73-74 where +2-3 points pushes them from APPLY SELECTIVELY to APPLY
 
 ## Required scoring-engine SKILL.md patch
 
-The `vacancy-compatibility-scoring-engine` SKILL.md P3 table needs this row
+The `vaccancy-compatibility-scoring-engine` SKILL.md P3 table needs this row
 added after "Other development orgs":
 
 ```
@@ -77,5 +77,5 @@ added after "Other development orgs":
 
 **Note:** The scoring engine skill is pinned. The patch was attempted but
 rejected by the tool's pinned-skill protection. The user should run
-`hermes curator unpin vacancy-compatibility-scoring-engine` to allow the
+`hermes curator unpin vaccancy-compatibility-scoring-engine` to allow the
 SKILL.md patch, or apply the P3 table change manually.

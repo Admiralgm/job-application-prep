@@ -25,7 +25,7 @@ The DOCX CV generator (`cv_generator.py`) implements the §0.4 Reference-CV Form
    - Director/Head of Function → Include AI/DT but frame through transformation consulting lens
 4. **Write JSON content file** to `~/Desktop/LND/CVS/cv_content_<Company>_<Role>.json`
 5. **Run generator**: `python3 ~/Desktop/LND/CVS/cv_generator.py ~/Desktop/LND/CVS/cv_content_<Company>_<Role>.json`
-6. **Verify**: `ls -la ~/Desktop/LND/CVS/User_Markovic_CV_<Company>_<Role>.docx`
+6. **Verify**: `ls -la ~/Desktop/LND/CVS/User_CV_<Company>_<Role>.docx`
 
 ## JSON Content Structure
 

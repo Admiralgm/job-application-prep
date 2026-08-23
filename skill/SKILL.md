@@ -136,7 +136,7 @@ bodies, then fetch full JDs and score them.
    email and skip obvious mismatches (actuarial, insurance, mechanical
    engineering with no ICT content, etc.). Fetch only relevant JDs.
 
-6. **Score with V5.0.0** — load `vacancy-compatibility-scoring-engine`
+6. **Score with V5.0.0** — load `vaccancy-compatibility-scoring-engine`
    and `cv-repository` skills, read the CV database, then score each JD
    with full 7-parameter framework.
 
@@ -222,7 +222,7 @@ cmux send-key --workspace <UUID> Enter
 ```
 
 ### Pitfalls
-- **Name must be GORAN MARKOVIĆ** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106`
+- **Name must be User MARKOVIĆ** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106`
 - **No first-person pronouns** in CV body — use action-led phrasing
 - **No tables** for competencies — ATS parsers break on table cells
 - **Compound bullets only** — pack 2-3 facts per bullet, never single-fact bullets
@@ -259,9 +259,9 @@ cmux send-key --workspace <UUID> Enter
 
 ```
 1. HEADER
-   GORAN MARKOVIĆ (with ć, not c)
-   Belgrade, Serbia | +381 64 110 8335 | admiralGM@gmail.com
-   LinkedIn: linkedin.com/in/goran-markovic3229
+   User MARKOVIĆ (with ć, not c)
+   Belgrade, Serbia | +381 64 110 8335 | your-handle@gmail.com
+   LinkedIn: linkedin.com/in/User-markovic3229
    Citizenship: Dual National – Czech Republic (EU) & Serbia
 
 2. PROFESSIONAL SUMMARY
@@ -334,7 +334,7 @@ Same content density, zero fluff. If a bullet could appear on anyone's CV, delet
 
 **Structure:**
 ```
-Subject: [Role Title] — Goran Marković
+Subject: [Role Title] — User Marković
 
 Dear [company] team,
 
@@ -351,7 +351,7 @@ Dear [company] team,
 [Confident sign-off — 1 sentence.]
 
 Best regards,
-Goran Marković
+User Marković
 phone
 email
 ```
@@ -396,7 +396,7 @@ When the user pastes a form question (e.g., "Please describe your experience in 
 
 9. **Form answers need honesty about gaps (NEW — 2026-05-24).** When asked "Have you led X?" and the answer is "not quite," the winning pattern is: "My answer is honest: I have done Y but not X — and that is precisely the step I am ready to take here." This builds trust. For the Reluna "led internal AI/engineering teams" question, the honest frame was: led classical IT at scale, AI leadership has been hands-on/advisory, and that's exactly the step I'm ready to take. This pattern generalizes to all edge-case form questions.
 
-10. **Missing diacritic in name (NEW — 2026-05-24).** The header must always be "Goran Marković" with ć, not "Goran Markovic" with c. Using the Latin 'c' instead of the correct Serbian 'ć' is the kind of detail that signals carelessness on a document that supposedly represents you. This was caught by Claude Opus 4.5 review.
+10. **Missing diacritic in name (NEW — 2026-05-24).** The header must always be "User Marković" with ć, not "User" with c. Using the Latin 'c' instead of the correct Serbian 'ć' is the kind of detail that signals carelessness on a document that supposedly represents you. This was caught by Claude Opus 4.5 review.
 
 11. **Over-separating sections (NEW — 2026-05-24).** Resist the urge to add visual separators, horizontal rules, or extra whitespace between sections. All-caps section titles are sufficient. Visual clutter reduces content density and signals amateur formatting.
 
@@ -408,7 +408,7 @@ When the user pastes a form question (e.g., "Please describe your experience in 
 
 16. **LinkedIn search-results URL format (NEW — 2026-07-25).** The user provided a `/jobs/search-results/` URL (generated from LinkedIn in-app notifications). I used it directly and only got 1 job card. The user corrected me: the `/jobs/search/` format is the one that renders multiple job cards. **Lesson:** When the user provides a search-results URL, navigate Chrome to it to establish the session, then switch to `/jobs/search/` format for extraction, or use the guest API `seeMoreJobPostings/search?start=0` for ID discovery. The search-results format is less useful for extraction.
 
-15. **Private-sector P3 scoring undercounts (NEW — 2026-07-24).** The V5.0.0 scoring engine P3 table has no row for pure private-sector roles. Without guidance, the scorer defaults to P3=0-2, which is systematically 3-6 points too low. The engine's own PMI calibration (2026-06-09) established private-sector P3 at 5-7 for large multinationals. This session scored ARRISE (12,000 staff, 8 countries) and Luxoft/DXC (global IT consulting) both at P3=2 — they should be 4-5. **Rule:** For legitimate mid-to-large private-sector companies, P3 minimum is 2; use 3-5 for mid-size regulated, 6-8 for large global multinationals. See `references/private-sector-scoring-calibration-2026-07.md` for the full corrected table and worked examples. **Action needed:** The scoring engine SKILL.md is pinned — user should run `hermes curator unpin vacancy-compatibility-scoring-engine` to allow the P3 table patch.
+15. **Private-sector P3 scoring undercounts (NEW — 2026-07-24).** The V5.0.0 scoring engine P3 table has no row for pure private-sector roles. Without guidance, the scorer defaults to P3=0-2, which is systematically 3-6 points too low. The engine's own PMI calibration (2026-06-09) established private-sector P3 at 5-7 for large multinationals. This session scored ARRISE (12,000 staff, 8 countries) and Luxoft/DXC (global IT consulting) both at P3=2 — they should be 4-5. **Rule:** For legitimate mid-to-large private-sector companies, P3 minimum is 2; use 3-5 for mid-size regulated, 6-8 for large global multinationals. See `references/private-sector-scoring-calibration-2026-07.md` for the full corrected table and worked examples. **Action needed:** The scoring engine SKILL.md is pinned — user should run `hermes curator unpin vaccancy-compatibility-scoring-engine` to allow the P3 table patch.
 
 ## Wiki Reference Pages
 
@@ -423,7 +423,7 @@ Load these from `config/wiki/` when preparing applications:
 | `concepts/cv-role-type-templates.md` | Legacy CV templates per role type |
 | `concepts/cover-letter-pattern-library.md` | Cover letter patterns, pricing, and org-specific frames |
 | `concepts/key-achievements-summary.md` | All quantifiable metrics |
-| `raw/articles/User-full-cv-2026-05-23.md` | Full CV source text |
+| `raw/articles/User-markovic-full-cv-2026-05-23.md` | Full CV source text |
 
 ## Multi-Model CV Synthesis
 
@@ -464,7 +464,7 @@ education, skills) in their **actual browser** — not a separate Hermes browser
    reference: `references/applescript-chrome-form-fill.md` for the full technique.
 
 2. **Source data from the CV Repository Database**
-   (`~/Desktop/CV/CV_REPOSITORY_DATABASE.md`) — Section 3 has all 12 positions
+   (`~/CV_REPOSITORY_DATABASE.md`) — Section 3 has all 12 positions
    with periods, companies, and roles. Enter reverse-chronological.
 
 3. **Fill visibly — do NOT submit.** The user monitors the process in their own
@@ -502,3 +502,5 @@ Tracker files:
 - `UN_SECTOR_VACCANCIES_ARCHIVE.txt` — Applied/expired
 - `FREELANCE_CONSULTING_OPPORTUNITIES.TXT` — Freelance/consulting
 - `UN_SECTOR_VACCANCIES_TEMPLATE.txt` — Format reference
+
+Master CV repository: `~/CV_REPOSITORY_DATABASE.md`

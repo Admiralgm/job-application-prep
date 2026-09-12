@@ -84,7 +84,7 @@ cmux send-key --workspace <UUID> Enter
 
 ## Pitfalls
 
-- **Name must be User MARKOVIĆ** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106` in the Python code
+- **Name must be User Surname** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106` in the Python code
 - **No first-person pronouns** in CV body — use action-led phrasing
 - **No tables** for competencies — ATS parsers break on table cells
 - **Compound bullets only** — pack 2-3 facts per bullet, never single-fact bullets

@@ -20,7 +20,7 @@ description: "Evaluate job vacancies against User's profile, produce tailored CV
 Use the scoring framework from the wiki. Load these pages for reference:
 - `config/wiki/concepts/profile-master-summary.md` — complete skills inventory
 - `config/wiki/concepts/vacancy-compatibility-evaluation-system.md` — scoring methodology
-- `config/wiki/entities/XXXXXX.md` — master profile
+- `config/wiki/entities/User-User.md` — master profile
 
 **Output:** A compatibility report with score (0-100), domain/geographic/role/seniority/keyword breakdowns, red flags, enablers, and a clear APPLY or DO NOT APPLY verdict.
 
@@ -222,7 +222,7 @@ cmux send-key --workspace <UUID> Enter
 ```
 
 ### Pitfalls
-- **Name must be User MARKOVIĆ** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106`
+- **Name must be User Surname** (with diacritic ć, Unicode U+0106) — the generator uses `\u0106`
 - **No first-person pronouns** in CV body — use action-led phrasing
 - **No tables** for competencies — ATS parsers break on table cells
 - **Compound bullets only** — pack 2-3 facts per bullet, never single-fact bullets
@@ -259,9 +259,9 @@ cmux send-key --workspace <UUID> Enter
 
 ```
 1. HEADER
-   User MARKOVIĆ (with ć, not c)
-   Belgrade, Serbia | +381 64 110 8335 | XXXXXX
-   LinkedIn: linkedin.com/in/XXXXXX
+   User Surname (with ć, not c)
+   Belgrade, Serbia | +381 XX XXX XXXX | your-handle@gmail.com
+   LinkedIn: linkedin.com/in/user-handle
    Citizenship: Dual National – Czech Republic (EU) & Serbia
 
 2. PROFESSIONAL SUMMARY
@@ -334,7 +334,7 @@ Same content density, zero fluff. If a bullet could appear on anyone's CV, delet
 
 **Structure:**
 ```
-Subject: [Role Title] — User Marković
+Subject: [Role Title] — User Surname
 
 Dear [company] team,
 
@@ -351,7 +351,7 @@ Dear [company] team,
 [Confident sign-off — 1 sentence.]
 
 Best regards,
-User Marković
+User Surname
 phone
 email
 ```
@@ -396,7 +396,7 @@ When the user pastes a form question (e.g., "Please describe your experience in 
 
 9. **Form answers need honesty about gaps (NEW — 2026-05-24).** When asked "Have you led X?" and the answer is "not quite," the winning pattern is: "My answer is honest: I have done Y but not X — and that is precisely the step I am ready to take here." This builds trust. For the Reluna "led internal AI/engineering teams" question, the honest frame was: led classical IT at scale, AI leadership has been hands-on/advisory, and that's exactly the step I'm ready to take. This pattern generalizes to all edge-case form questions.
 
-10. **Missing diacritic in name (NEW — 2026-05-24).** The header must always be "User Marković" with ć, not "User" with c. Using the Latin 'c' instead of the correct Serbian 'ć' is the kind of detail that signals carelessness on a document that supposedly represents you. This was caught by Claude Opus 4.5 review.
+10. **Missing diacritic in name (NEW — 2026-05-24).** The header must always be "User Surname" with ć, not "User" with c. Using the Latin 'c' instead of the correct Serbian 'ć' is the kind of detail that signals carelessness on a document that supposedly represents you. This was caught by Claude Opus 4.5 review.
 
 11. **Over-separating sections (NEW — 2026-05-24).** Resist the urge to add visual separators, horizontal rules, or extra whitespace between sections. All-caps section titles are sufficient. Visual clutter reduces content density and signals amateur formatting.
 
@@ -418,12 +418,12 @@ Load these from `config/wiki/` when preparing applications:
 |------|-----|
 | `concepts/profile-master-summary.md` | Complete skills inventory — the lossless reference |
 | `concepts/vacancy-compatibility-evaluation-system.md` | Scoring methodology and decision thresholds |
-| `entities/XXXXXX.md` | Master profile with full career data |
+| `entities/User-User.md` | Master profile with full career data |
 | `concepts/cv-style-guide-canonical.md` | The canonical CV format rules |
 | `concepts/cv-role-type-templates.md` | Legacy CV templates per role type |
 | `concepts/cover-letter-pattern-library.md` | Cover letter patterns, pricing, and org-specific frames |
 | `concepts/key-achievements-summary.md` | All quantifiable metrics |
-| `raw/articles/XXXXXX-full-cv-2026-05-23.md` | Full CV source text |
+| `raw/articles/User-User-full-cv-2026-05-23.md` | Full CV source text |
 
 ## Multi-Model CV Synthesis
 

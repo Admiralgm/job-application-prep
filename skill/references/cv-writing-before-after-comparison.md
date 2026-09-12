@@ -46,8 +46,8 @@ The AFTER version packs the same information + additional facts (LLM workflows, 
 
 ## What Changed in Wording
 
-- "Markovic" → "Marković" (diacritic)
-- Phone masked (****) → full number (+381 64 110 8335)
+- "User" → "Surname" (diacritic)
+- Phone masked (****) → full number (+381 XX XXX XXXX)
 - "Serbian & EU (Czech Republic)" → "Dual National – Czech Republic (EU) & Serbia"
 - "possesses a unique ability to act as a high-level coordination bridge" → "The Bridge: Combines the strategic vision... with the operational credibility..."
 - Removed all filler: "extensive background in", "proven track record", "demonstrated expertise"
